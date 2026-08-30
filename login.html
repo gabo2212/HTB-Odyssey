@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Authentication — AEGIS</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-body">
+  <div class="banner banner--top">
+    <span class="banner__dot"></span>
+    <span class="banner__text">TOP SECRET // KORVIA EYES ONLY // D9-RESTRICTED</span>
+    <span class="banner__dot"></span>
+  </div>
+
+  <div class="login">
+    <div class="login__panel">
+      <div class="login__brand">
+        <img class="login__sigil" src="/img/sigil.svg" alt="">
+        <div>
+          <div class="login__system">AEGIS</div>
+          <div class="login__sub">Sovereign Signing &amp; Attestation Authority</div>
+          <div class="login__agency mono">Directorate 9 · NODE aegis-prod-01</div>
+        </div>
+      </div>
+
+      <form class="login__form" id="js-auth-form" onsubmit="return false">
+        <label class="field">
+          <span class="field__label">Operator Handle</span>
+          <input class="field__input mono" type="text" name="handle" autocomplete="username" placeholder="surname.initial" required>
+        </label>
+
+        <button class="btn btn--primary login__submit" id="js-auth-btn" type="button">
+          <span class="btn__icon">⌬</span>
+          Authenticate with Hardware Authenticator
+        </button>
+
+        <div class="login__hint mono">FIDO2 / WebAuthn · platform &amp; cross-platform authenticators accepted</div>
+      
+        <div id="js-auth-status" class="login__hint mono" style="margin-top:12px;color:#f0c674;"></div>
+      </form>
+
+      <div class="login__rules">
+        <div class="rules__title">Notice</div>
+        <ul class="rules__list">
+          <li>This is a restricted system of Directorate 9.</li>
+          <li>All sessions are recorded and attributed.</li>
+          <li>Misuse is prosecuted under State Security Act §14 and §22.</li>
+        </ul>
+      </div>
+    </div>
+
+    <aside class="login__aside">
+      <div class="aside__block">
+        <div class="aside__label">Platform</div>
+        <div class="aside__value mono">OPERATIONAL</div>
+      </div>
+      <div class="aside__block">
+        <div class="aside__label">Active Pipelines</div>
+        <div class="aside__value mono">5 / 5</div>
+      </div>
+      <div class="aside__block">
+        <div class="aside__label">Authorisation Queue</div>
+        <div class="aside__value mono">1 pending</div>
+      </div>
+            <div class="aside__block">
+        <div class="aside__label">Compatible Authenticators</div>
+        <div id="js-mds-compat" class="mono" style="font-size:11px;line-height:1.7;color:#9aa6b8;">loading…</div>
+      </div>
+      <div class="aside__block aside__block--ticker">
+        <div class="aside__label">Bulletin</div>
+        <div class="ticker mono">
+          <div>2026-04-30 — Pipeline mobile-supply degraded; investigating.</div>
+          <div>2026-04-29 — Quarterly key ceremony complete (KCE-Q2-2026).</div>
+          <div>2026-04-28 — Roster revision Δ-2 → Δ-3 effective immediately for Operator i.demko.</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="banner banner--bottom">
+    <span class="banner__text">TOP SECRET // KORVIA EYES ONLY // D9-RESTRICTED</span>
+  </div>
+  <script src="/js/main.js"></script>
+  <script src="/js/webauthn.js"></script>
+  <script>
+  (function(){
+    var btn=document.getElementById('js-auth-btn');
+    var st =document.getElementById('js-auth-status');
+    btn.addEventListener('click',function(){
+      st.style.color='#f0c674'; st.textContent='Beginning authentication ceremony…';
+      AegisWebAuthn.authenticate().then(function(r){
+        st.style.color='#9ee493'; st.textContent='Authenticated as '+r.handle+' ('+r.role+'). Redirecting…';
+        setTimeout(function(){ window.location='/dashboard'; },800);
+      }).catch(function(e){
+        st.style.color='#f08080'; st.textContent='Authentication failed: '+(e&&e.message?e.message:e);
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

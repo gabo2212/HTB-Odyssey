@@ -1,0 +1,5 @@
+# Odyssey HTB — local secrets (DO NOT COMMIT real values)
+# Copy to FLAGS.txt and fill in after you own the box.
+
+user.txt=<REDACTED>
+root.txt=<REDACTED>

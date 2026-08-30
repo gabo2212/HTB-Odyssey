@@ -1,0 +1,63 @@
+# Secrets / flags
+FLAGS.txt
+diag_token.txt
+session_cookie.txt
+opkey.hex
+aegis_cred.pkl
+*.kirbi
+*.kirbi.b64
+*.ccache
+secretsdump.out
+
+# Live session / dumps
+shell_out.txt
+shell_cmds.txt
+more_cmds.txt
+queue_*.txt
+hives/
+*.log
+openvpn*.log
+ligolo_out.txt
+ligolo_err.txt
+ui.log
+chisel_srv.*
+
+# VPN / certs
+*.ovpn
+ligolo-selfcerts/
+ligolo-ng.yaml
+ligolo-ng.history
+
+# Binaries / large archives / tools drops
+*.exe
+*.bin
+agent
+agent64
+chisel_linux
+proxy.exe
+*.tgz
+*.tar.gz
+*.zip
+adwheels.tgz
+ew_gems.tgz
+chisel.tgz
+ligolo-agent.tar.gz
+ligolo-proxy.zip
+
+# Copyrighted / extracted writeup
+odyssey_walkthrough.txt
+
+# Python / build junk
+__pycache__/
+*.pyc
+_noop
+shell_ready.flag
+
+# LFI / render noise with env leaks
+lfi*.txt
+lfierr_*
+raw_*.json
+render_*.json
+invites.json
+
+LICENSE

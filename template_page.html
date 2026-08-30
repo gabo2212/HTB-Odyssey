@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>firmware-critical-v4 — AEGIS</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="banner banner--top">
+    <span class="banner__dot"></span>
+    <span class="banner__text">TOP SECRET // KORVIA EYES ONLY // D9-RESTRICTED</span>
+    <span class="banner__dot"></span>
+  </div>
+
+  <header class="topbar">
+  <div class="topbar__brand">
+    <img class="topbar__sigil" src="/img/sigil.svg" alt="">
+    <div class="topbar__title">
+      <div class="topbar__system">AEGIS</div>
+      <div class="topbar__sub">Sovereign Signing &amp; Attestation Authority</div>
+    </div>
+  </div>
+  <div class="topbar__meta">
+    <div class="kv"><span class="kv__k">NODE</span><span class="kv__v mono">aegis-prod-01</span></div>
+    <div class="kv"><span class="kv__k">BUILD</span><span class="kv__v mono">7.4.2-prod</span></div>
+    <div class="kv"><span class="kv__k">TIME</span><span class="kv__v mono" id="js-clock">—</span></div>
+  </div>
+  <div class="topbar__user">
+    <div class="user">
+      <div class="user__name"></div>
+      <div class="user__meta mono">admin · Administrator · </div>
+    </div>
+    <a class="btn btn--ghost" href="/logout">Sign Out</a>
+  </div>
+</header>
+
+  <nav class="sidenav">
+  <div class="sidenav__group">
+    <div class="sidenav__label">Operations</div>
+    <a class="sidenav__item " href="/">Console</a>
+    <a class="sidenav__item " href="/requests">Signing Requests</a>
+    
+    <a class="sidenav__item " href="/requests/new">New Request</a>
+    
+    <a class="sidenav__item " href="/status">Platform Status</a>
+  </div>
+  <div class="sidenav__group">
+    <div class="sidenav__label">Account</div>
+    <a class="sidenav__item " href="/account">Authenticators</a>
+  </div>
+  
+  <div class="sidenav__group">
+    <div class="sidenav__label">Authority</div>
+    <a class="sidenav__item " href="/admin/approvals">Authorisation Queue</a>
+    <a class="sidenav__item is-active" href="/admin/templates">Notice Templates</a>
+    <a class="sidenav__item " href="/admin/operators">Operator Roster</a>
+  </div>
+  
+  <div class="sidenav__foot">
+    <div class="sidenav__pulse"><span class="pulse pulse--ok"></span> Pipelines nominal</div>
+    <div class="sidenav__pulse"><span class="pulse pulse--warn"></span> 1 advisory</div>
+  </div>
+</nav>
+
+
+  <main class="main">
+    <div class="main__inner">
+      
+
+<div class="page-head">
+  <div class="page-head__crumbs mono">/ admin / templates / firmware-critical-v4</div>
+  <h1 class="page-head__title">Firmware — Critical Risk</h1>
+  <div class="page-head__sub">
+    <span class="mono">firmware-critical-v4@45</span> ·
+    owner <span class="mono">r.kova</span> ·
+    scope <span class="mono">firmware-bls · risk≥HIGH</span> ·
+    <span class="chip chip--ok">ACTIVE</span>
+    
+  </div>
+</div>
+
+<section class="grid grid--two">
+  <div class="card">
+    <div class="card__head">
+      <div class="card__title">Template Body</div>
+      <span class="muted mono">last modified Wed May 06 2026 11:08:38 GMT+0000 (Coordinated Universal Time)</span>
+    </div>
+    <textarea id="tpl-body" class="field__input field__input--area mono" rows="14" spellcheck="false">Authorisation issued by {{ officer.handle }} ({{ officer.clearance }}) for artifact {{ request.artifact }} on pipeline {{ pipeline.id }} at {{ now }}.
+
+Lineage:
+{% for hop in artifact.lineage %}  - {{ hop }}
+{% endfor %}
+Notice: {{ overrides | merge(defaults) | json }}</textarea>
+    <div class="form__actions">
+      <button class="btn btn--ghost" id="btn-discard">Discard</button>
+      <button class="btn btn--ghost" id="btn-save">Save Draft</button>
+      <button class="btn btn--primary" id="btn-publish">Publish New Version</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card__head"><div class="card__title">Preview</div></div>
+    <div class="muted" style="margin-bottom:10px;">Render against a sample request. <code class="mono">overrides</code> is JSON supplied by the officer at approval time and merged with pipeline defaults.</div>
+    <label class="field">
+      <span class="field__label">Sample Request</span>
+      <select class="field__input mono">
+        <option>SR-2026-04-1182 — kernel-driver-nvtsec.sys</option>
+      </select>
+    </label>
+    <label class="field">
+      <span class="field__label">Sample Pipeline</span>
+      <input class="field__input mono" type="text" value="firmware-bls" readonly>
+    </label>
+    <label class="field">
+      <span class="field__label">Overrides (JSON)</span>
+      <textarea id="tpl-overrides" class="field__input field__input--area mono" rows="6" spellcheck="false">{
+  "audience": "internal",
+  "allowRawBlocks": false,
+  "ceremony_witness": "s.vrana"
+}</textarea>
+    </label>
+    <div class="form__actions">
+      <button class="btn btn--primary" id="btn-preview">Render Preview</button>
+    </div>
+    <div style="margin-top:14px;">
+      <div class="field__label">Render Result</div>
+      <pre class="code" id="tpl-output">— click Render Preview —</pre>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="card__head">
+    <div class="card__title">Render Diagnostics</div>
+    <span class="muted mono">most recent 5 renders · last_error_msg surfaces stderr from the failing pipeline stage for template debugging</span>
+  </div>
+  
+  <p class="muted">No render attempts recorded yet.</p>
+  
+</section>
+
+<section class="card">
+  <div class="card__head"><div class="card__title">Version History</div></div>
+  <table class="table">
+    <thead><tr><th>Version</th><th>Author</th><th>Published</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">@45</td><td class="mono">r.kova</td><td class="mono">Wed May 06 2026 11:08:38 GMT+0000 (Coordinated Universal Time)</td><td>current</td></tr>
+      <tr><td class="mono">@44</td><td class="mono">r.kova</td><td class="mono">2026-03-14T09:11:02Z</td><td>added lineage block</td></tr>
+      <tr><td class="mono">@43</td><td class="mono">a.holm</td><td class="mono">2026-02-28T16:03:41Z</td><td>initial</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<script>
+function fmtStages(stages) {
+  if (!stages || !stages.length) return '(no stage output)';
+  return stages.map(function (s) {
+    return '[' + s.stage + ' code=' + s.code + ' ' + (s.durationMs||0) + 'ms]\n' +
+           (s.stderr ? s.stderr.trim() : '') +
+           (s.stdout ? '\n--- stdout ---\n' + s.stdout.trim() : '');
+  }).join('\n\n');
+}
+
+document.getElementById('btn-preview').addEventListener('click', async () => {
+  const body = document.getElementById('tpl-body').value;
+  const overrides = document.getElementById('tpl-overrides').value;
+  const out = document.getElementById('tpl-output');
+  out.textContent = '— rendering —';
+  try {
+    const r = await fetch(location.pathname + '/render', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body: body, overrides: overrides })
+    });
+    const j = await r.json();
+    let txt = (j.ok ? '✓ render OK' : '✗ render FAILED at stage ' + j.finalStage) +
+              ' · ' + (j.durationMs || 0) + 'ms' +
+              (j.artifactPath ? '\nartifact: ' + j.artifactPath : '') +
+              '\n\n' + fmtStages(j.stages || []);
+    out.textContent = txt;
+  } catch (e) {
+    out.textContent = 'preview error: ' + e.message;
+  }
+});
+
+document.getElementById('btn-save').addEventListener('click', async () => {
+  const body = document.getElementById('tpl-body').value;
+  const r = await fetch(location.pathname + '/save', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ body: body })
+  });
+  const j = await r.json();
+  document.getElementById('tpl-output').textContent = j.ok ? ('saved · v' + j.version) : ('save error: ' + j.error);
+});
+document.getElementById('btn-publish').addEventListener('click', () => document.getElementById('btn-save').click());
+document.getElementById('btn-discard').addEventListener('click', () => location.reload());
+</script>
+
+
+    </div>
+  </main>
+
+  <div class="banner banner--bottom">
+    <span class="banner__text">TOP SECRET // KORVIA EYES ONLY // D9-RESTRICTED · UNAUTHORISED ACCESS IS A CAPITAL OFFENCE UNDER KORVIAN STATE SECURITY ACT §14</span>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
